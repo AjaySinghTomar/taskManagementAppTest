@@ -1,0 +1,64 @@
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-9 col-xl-7">
+          <div class="card rounded-3">
+            <div class="card-body p-4">
+  
+              <h4 class="text-center my-3 pb-3">Manage Task</h4>
+  
+              <form #taskForm="ngForm" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                <label class="form-label" for="form1">Enter a task here</label>
+                <div class="col-12">
+                  <div class="form-outline">
+                    <input [(ngModel)]="taskName" name="taskName" type="text" id="form1" class="form-control" />
+                  </div>
+                </div>
+  
+  
+                <div class="col-12">
+                  <button type="submit" class="btn btn-warning" (click)="addTask()">Add tasks</button>
+                </div>
+              </form>
+  
+              <div class="row row-cols-lg-auto g-3 mb-4 pb-2">
+                <label for="">Filter</label>
+                <div class="w-25">
+                    <select [disabled]="taskList.length === 0" [(ngModel)]="taskStatus" class="form-select" >
+                        <option selected value="all">All</option>
+                        <option value="completed">Completed</option>
+                        <option value="incompleted">Incompleted</option>
+                    </select>
+                </div>
+              </div>
+
+              <div *ngIf="taskList.length === 0" class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">There is no task in list</h5>
+                  <p class="card-text">Please add task to ckeck functionality.</p>
+                </div>
+              </div>
+              
+              <table *ngIf="taskList.length !== 0" class="table mb-4">
+                <thead>
+                  <tr>
+                    <th scope="col">Mark as completed</th>
+                    <th scope="col">Todo item</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let task of taskList  | filter: taskStatus let i=index ">
+                    <th scope="row"><input [disabled]="task.status == 'Completed'" type="checkbox" class="form-check-input" id="complete" (change)="onChange(i)"></th>
+                    <td>{{task.title}}</td>
+                    <td>{{task.status}}</td>
+                  </tr>
+                </tbody>
+              </table>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
